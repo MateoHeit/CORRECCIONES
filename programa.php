@@ -21,7 +21,7 @@ include_once("tateti.php");
 //FUNCIONES PARA CARGAR JUEGOS A LA COLECCION
 
 /**
-*Esta funcion recibe como parametro un arreglo multidimiensional carga 10 juegos como *ejemplo con el nombre de cada jugador y sus respectivos puntajes
+*Esta funcion carga un arreglo multidimiensional con 10 juegos como ejemplo con el nombre de cada jugador y sus respectivos puntajes
 *@return array
 */
 
@@ -44,7 +44,6 @@ return $coleccion;
 
 
 /**
- * 5) Punto vista programador
  * Esta funcion agrega un juego a la coleccion de juegos
  * @param array $coleccion
  * @param array $juegoNuevo
@@ -130,7 +129,6 @@ function pideYverificaJugador($coleccion){
 
 
 /**
- * 6)Punto Vista Programador 
  * Funcion que retorna el indice del primer juego ganado por un jugador dado
  * @param array $coleccion
  * @param String $nombreJugador
@@ -172,7 +170,6 @@ function indiceGanador($coleccion, $nombreJugador){
 //FUNCIONES PARA MOSTRAR EL PORCENTAJE DE JUEGOS GANADOS POR SIMBOLO
 
 /**
-*8) punto de vista del programador
 *Esta funcion no recibe ninguna variable por parametro y retorna el simbolo elegido por el usuario
 *@return String
 */
@@ -193,7 +190,6 @@ function retornaSimbolo(){
 
 
 /**
- * 9) desde el punto de vista del programador
  * Esta funcion retorna la cantidad de juegos ganados
  * @param array $coleccion
  * @return int
@@ -210,7 +206,7 @@ function juegosGanadosTot($coleccion){
     return $totalJuegosGanados;
 }
 
-/** 10) 
+/** 
  * Modulo que Retorna la cantidad de juegos ganados por un símbolo dado
  * @param $coleccionJuegos
  * @param $simbolo
@@ -237,7 +233,6 @@ return $ganados;
 
 
 /**
- * 4)Punto de vista del usuario
  * Este modulo calcula el porcentaje de juegos ganados segun sea el simbolo
  * @param array $coleccion1
  */
@@ -263,7 +258,6 @@ function mostrarPorcentajeGanados($coleccion1){
 //Se vuelve a usar nuevamente la funcion pideYVerificaJugador
 
 /** 
- * 7) Desde el punto de vista del programador
  *  Modulo que retorna Un arreglo con el resumen de un Jugador Dado
  * @param array $coleccion
  * @param string $nombreJugador
@@ -321,7 +315,6 @@ function resumenArray($coleccion, $nombreJugador){
 }
 
 /**
- * 5 Desde el punto de vista del usuario
  * Este modulo muestra por pantalla el resumen del jugador
  * @param $arrayResumen
  */
@@ -342,8 +335,7 @@ function mostrarResumen($arrayResumen){
 //FUNCIONES PARA MOSTRAR LISTADO DE JUEGOS ORDENADO POR JUGADOR CIRCULO
 
 /**
- * 11)
- * Esta funcion compara la los nombres de la clave "jugadorCirculo" de las dos primeras colecciones y retorna un valor segun la relacion esntre estas
+ * Esta funcion compara los nombres de la clave "jugadorCirculo" de las colecciones y retorna un valor segun la relacion esntre estas
  * @param array $a
  * @param array $b
  * @return int
