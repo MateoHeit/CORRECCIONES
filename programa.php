@@ -13,9 +13,6 @@ include_once("tateti.php");
 */
 
 
-
-
-
 /**************************************/
 /***** DEFINICION DE FUNCIONES ********/
 /**************************************/
@@ -25,12 +22,12 @@ include_once("tateti.php");
 
 /**
 *Esta funcion recibe como parametro un arreglo multidimiensional carga 10 juegos como *ejemplo con el nombre de cada jugador y sus respectivos puntajes
-*@param array $coleccionJuegos
 *@return array
 */
 
 function cargarJuegos() {
-            
+    //array $coleccion
+
     $coleccion[0] = ["jugadorCruz" => "GONZA", "jugadorCirculo" => "ALE" , "puntosCruz" => 3 , "puntosCirculo" => 0] ;
     $coleccion[1] = ["jugadorCruz" => "JUAN", "jugadorCirculo" => "CARO" , "puntosCruz" => 1 , "puntosCirculo" => 1] ;
     $coleccion[2] = ["jugadorCruz" => "ANTONIO", "jugadorCirculo" => "MARINA" , "puntosCruz" => 4 , "puntosCirculo" => 0] ;
@@ -44,37 +41,36 @@ function cargarJuegos() {
     
 return $coleccion;
     }
-    
 
-/**5)Punto Vista Programador
- * Esta funcion agrega un nuevo juego a la colección 
- * @param
- * @param
+
+/**
+ * 5) Punto vista programador
+ * Esta funcion agrega un juego a la coleccion de juegos
+ * @param array $coleccion
+ * @param array $juegoNuevo
+ * @return array
  */
-function agregarJuego($coleccionJuegos, $juegoNuevo){
-    $coleccionJuegos[]= $juegoNuevo;
-  return $coleccionJuegos ;
+function agregarJuego($coleccion, $juegoNuevo){
+    $coleccion[]= $juegoNuevo;
+  return $coleccion;
 }
-
 
 
 //FUNCION PARA MOSTRAR UN JUEGO POR NUMERO DE JUEGO
 
-/**Este Modulo Muestra un Juego. 
-*@param array $coleccionJuegos
+/**
+* Este Modulo Muestra un Juego. 
+*@param array $coleccion
 *@param int $numeroJuego
 */
-function mostrarJuego($coleccionJuegos, $numeroJuego)
-{
-    // string $resultado,$nombreX, $nombreO
-    // int $puntosCirculo, $puntosO
-//convierto a mayusculas
-    $nombreX = $coleccionJuegos[$numeroJuego]["jugadorCruz"]; 
-//convierto a mayusculas
-   $nombreO = strtoupper($coleccionJuegos[$numeroJuego]["jugadorCirculo"]);
-//obtengo los puntos
-    $puntosX = $coleccionJuegos[$numeroJuego]["puntosCruz"];
-    $puntosO = $coleccionJuegos[$numeroJuego]["puntosCirculo"];
+function mostrarJuego($coleccion, $numeroJuego){
+    //string $resultado, $nombreX, $nombreO
+    //int $puntosCirculo, $puntosO 
+    $nombreX = $coleccion[$numeroJuego]["jugadorCruz"]; 
+    $nombreO = $coleccion[$numeroJuego]["jugadorCirculo"];
+    //obtengo los puntos
+    $puntosX = $coleccion[$numeroJuego]["puntosCruz"];
+    $puntosO = $coleccion[$numeroJuego]["puntosCirculo"];
  
     //condiciones para el valor $resultado
     if ($puntosX == $puntosO) {
@@ -87,23 +83,23 @@ function mostrarJuego($coleccionJuegos, $numeroJuego)
     // imprimo el resultado del juego
     echo "****************************\n";
     echo "Juego TATETI: " . ($numeroJuego+1) . " " . $resultado . "\n";
-    echo "Jugador X: " . $nombreX . " obtuvo " . $puntosX . "\n";
-    echo "Jugador O: " . $nombreO . " obtuvo " . $puntosO . "\n";
+    echo "Jugador X: " . $nombreX . " obtuvo " . $puntosX . "puntos \n";
+    echo "Jugador O: " . $nombreO . " obtuvo " . $puntosO . "puntos \n";
     echo "****************************\n";
 }
 
 //FUNCIONES PARA MOSTRAR EL PRIMER JUEGO GANADOR
 
-/**Este modulo pide el nombre de un jugador y recorre el arreglo parcialmente para verificar si existe en la coleccion. Retorna el nombre si existe
-*@param array $coleccionJuegos
-*@return String
-*/
-function pideYverificaJugador($coleccionJuegos){
+
+/**
+ *Este modulo pide el nombre de un jugador y recorre el arreglo parcialmente para verificar si existe en la coleccion. Retorna el nombre si existe
+ *@param array $coleccion
+ *@return String
+ */
+function pideYverificaJugador($coleccion){
     //int $i
     //String $nombre
     //boolean $repetir
-    
-    //inicializacion
     $i = 0;
     $repetir = false;
 
@@ -112,16 +108,16 @@ function pideYverificaJugador($coleccionJuegos){
     $nombre= strtoupper(trim(fgets(STDIN)));
     
     do{
-    while(($coleccionJuegos[$i]["jugadorCruz"]!= $nombre && $coleccionJuegos[$i]["jugadorCirculo"] !=$nombre ) && $i < count($coleccionJuegos) ){
+    while(($coleccion[$i]["jugadorCruz"]!= $nombre && $coleccion[$i]["jugadorCirculo"] !=$nombre ) && $i < count($coleccion) ){
         $i++;
     }
-    if($coleccionJuegos[$i]["jugadorCruz"]== $nombre){
-        $nombre = $coleccionJuegos[$i]["jugadorCruz"];
+    if($coleccion[$i]["jugadorCruz"]== $nombre){
+        $nombre = $coleccion[$i]["jugadorCruz"];
     } else{
-        $nombre = $coleccionJuegos[$i]["jugadorCirculo"];
+        $nombre = $coleccion[$i]["jugadorCirculo"];
     } 
     
-    if($i >= count($coleccionJuegos)){
+    if($i >= count($coleccion)){
         echo"Este jugador No se encuentra en la colección de juegos, Por favor ingrese otro: "; 
         $nombre= strtoupper(trim(fgets(STDIN)));
         $i=0;
@@ -133,31 +129,33 @@ function pideYverificaJugador($coleccionJuegos){
     }
 
 
-/** 6)Punto Vista Programador
+/**
+ * 6)Punto Vista Programador 
  * Funcion que retorna el indice del primer juego ganado por un jugador dado
- * @param array $coleccionJuegos
+ * @param array $coleccion
  * @param String $nombreJugador
  * @return int
  */
-function indiceGanador($coleccionJuegos, $nombreJugador){
-    //int $indice $noGano, $i  boolean $flag
+function indiceGanador($coleccion, $nombreJugador){
+    //int $indice, $i  
+    //boolean $flag
    $i=0;
    $flag = true;
    
    do{
-       if($coleccionJuegos[$i]["jugadorCruz"] == $nombreJugador){
-          if($coleccionJuegos[$i]["puntosCruz"]>$coleccionJuegos[$i]["puntosCirculo"]){
+       if($coleccion[$i]["jugadorCruz"] == $nombreJugador){
+          if($coleccion[$i]["puntosCruz"]>$coleccion[$i]["puntosCirculo"]){
               $indice = $i;
               $flag = false;
           }
-       }elseif($coleccionJuegos[$i]["jugadorCirculo"] == $nombreJugador){
-           if($coleccionJuegos[$i]["puntosCruz"]<$coleccionJuegos[$i]["puntosCirculo"]){
+       }elseif($coleccion[$i]["jugadorCirculo"] == $nombreJugador){
+           if($coleccion[$i]["puntosCruz"]<$coleccion[$i]["puntosCirculo"]){
               $indice = $i;
               $flag = false;
           }
        }
    
-       if($i >= count($coleccionJuegos)-1 ){
+       if($i >= count($coleccion)-1 ){
           $flag = false;
           $indice = -1; //en caso de que no haya ganado ninguna
        }
@@ -173,7 +171,8 @@ function indiceGanador($coleccionJuegos, $nombreJugador){
 
 //FUNCIONES PARA MOSTRAR EL PORCENTAJE DE JUEGOS GANADOS POR SIMBOLO
 
-/** 8) punto de vista del programador
+/**
+*8) punto de vista del programador
 *Esta funcion no recibe ninguna variable por parametro y retorna el simbolo elegido por el usuario
 *@return String
 */
@@ -195,16 +194,16 @@ function retornaSimbolo(){
 
 /**
  * 9) desde el punto de vista del programador
- * retorna la cantidad de juegos ganados
- * @param array $coleccionJuegos
- * @param int $totalJuegosGanados
+ * Esta funcion retorna la cantidad de juegos ganados
+ * @param array $coleccion
  * @return int
  */
 
-function juegosGanadosTot($coleccionJuegos){
+function juegosGanadosTot($coleccion){
+    //int $totalJuegosGanados
     $totalJuegosGanados = 0;
-    for($i=0; $i < count($coleccionJuegos); $i++){
-        if($coleccionJuegos[$i]["puntosCruz"] != $coleccionJuegos[$i]["puntosCirculo"]){
+    for($i=0; $i < count($coleccion); $i++){
+        if($coleccion[$i]["puntosCruz"] != $coleccion[$i]["puntosCirculo"]){
             $totalJuegosGanados++;
         }
     }
@@ -217,14 +216,14 @@ function juegosGanadosTot($coleccionJuegos){
  * @param $simbolo
  * @return int 
  */
-function juegosGanadosPorSimbolo($coleccionJuegos, $simbolo){
+function juegosGanadosPorSimbolo($coleccion, $simbolo){
     //int $ganadosCruz, $ganadosCirculo, $ganados
     $ganadosCruz = 0;
     $ganadosCirculo = 0;
-    for($i=0; $i < count($coleccionJuegos); $i++){
-        if($coleccionJuegos[$i]["puntosCruz"] > $coleccionJuegos[$i]["puntosCirculo"] ){
+    for($i=0; $i < count($coleccion); $i++){
+        if($coleccion[$i]["puntosCruz"] > $coleccion[$i]["puntosCirculo"] ){
             $ganadosCruz++;
-        }elseif($coleccionJuegos[$i]["puntosCruz"] < $coleccionJuegos[$i]["puntosCirculo"]){
+        }elseif($coleccion[$i]["puntosCruz"] < $coleccion[$i]["puntosCirculo"]){
             $ganadosCirculo++;
         }
     }
@@ -237,25 +236,23 @@ return $ganados;
 }
 
 
-
-/**4)Punto de vista del usuario
- * Este modulo solicita al usuario como dato un simbolo y muestra por pantalla_
- * _el porcentaje de los juegos ganados de dicho simbolo.
- * @param array $coleccionJuegos
+/**
+ * 4)Punto de vista del usuario
+ * Este modulo calcula el porcentaje de juegos ganados segun sea el simbolo
+ * @param array $coleccion
  */
-function mostrarPorcentajeGanados($coleccionJuegos){
-    //int $totalJuegosGanados, $acumJuegosGanadosO, $acumJuegosGanadosX
+function mostrarPorcentajeGanados($coleccion){
     //float $porcentaje
     //String $simbolo 
 
     $simbolo = retornaSimbolo();
 
     if($simbolo == "X"){
-        $porcentaje = juegosGanadosPorSimbolo($coleccionJuegos, $simbolo) * 100 / juegosGanadosTot($coleccionJuegos);
+        $porcentaje = juegosGanadosPorSimbolo($coleccion, $simbolo) * 100 / juegosGanadosTot($coleccion);
        echo  "El porcentaje de los juegos ganados por ". $simbolo. " es: ". $porcentaje . "% \n";
 
     }else{
-        $porcentaje = juegosGanadosPorSimbolo($coleccionJuegos, $simbolo) * 100 / juegosGanadosTot($coleccionJuegos);
+        $porcentaje = juegosGanadosPorSimbolo($coleccion, $simbolo) * 100 / juegosGanadosTot($coleccion);
         echo "El porcentaje de los juegos ganados por". $simbolo. " es: ". $porcentaje . "% \n";
     } 
 }
@@ -265,48 +262,50 @@ function mostrarPorcentajeGanados($coleccionJuegos){
 
 //Se vuelve a usar nuevamente la funcion pideYVerificaJugador
 
-/** 7) Desde el punto de vista del programador
+/** 
+ * 7) Desde el punto de vista del programador
  *  Modulo que retorna Un arreglo con el resumen de un Jugador Dado
- * @param array $coleccionJuegos
- * @param String $jugador
+ * @param array $coleccion
+ * @param string $nombreJugador
  * @return array
  */
-function resumenArray($coleccionJuegos, $nombreJugador){
-//int $i, $partidasGanadas ,$partidasPerdidas, $PartidasEmpate , $puntosAcum 
-$resumenJugador=[];
+function resumenArray($coleccion, $nombreJugador){
+    //int $i, $partidasGanadas ,$partidasPerdidas, $partidasEmpate , $puntosAcum 
+    //array $resumenJugador
+    $resumenJugador=[];
      
-$partidasGanadas = 0;
-$partidasPerdidas = 0;
-$PartidasEmpate = 0;
-$puntosAcum = 0;
-////cuenta las partidas que ganó un jugador ($nombreJugador)
-for($i=0; $i < count($coleccionJuegos); $i++){
+    $partidasGanadas = 0;
+    $partidasPerdidas = 0;
+    $PartidasEmpate = 0;
+    $puntosAcum = 0;
+    //cuenta las partidas que ganó un jugador
+    for($i=0; $i < count($coleccion); $i++){
            
-    if($nombreJugador == $coleccionJuegos[$i]["jugadorCruz"]){
+        if($nombreJugador == $coleccion[$i]["jugadorCruz"]){
 
-        if($coleccionJuegos[$i]["puntosCruz"] == $coleccionJuegos[$i]["puntosCirculo"] ){
+            if($coleccion[$i]["puntosCruz"] == $coleccion[$i]["puntosCirculo"] ){
              $PartidasEmpate++;
              $puntosAcum = $puntosAcum + $PartidasEmpate;
-        }elseif($coleccionJuegos[$i]["puntosCruz"] > $coleccionJuegos[$i]["puntosCirculo"] ){
+            }elseif($coleccion[$i]["puntosCruz"] > $coleccion[$i]["puntosCirculo"] ){
              $partidasGanadas ++;
-             $puntosAcum = $puntosAcum + $coleccionJuegos[$i]["puntosCruz"];
-        }else{
+             $puntosAcum = $puntosAcum + $coleccion[$i]["puntosCruz"];
+             }else{
             $partidasPerdidas++; 
-        }
+             }
 
 
-    }elseif($nombreJugador == $coleccionJuegos[$i]["jugadorCirculo"] ){
-        if($coleccionJuegos[$i]["puntosCruz"] == $coleccionJuegos[$i]["puntosCirculo"] ){
+        }elseif($nombreJugador == $coleccion[$i]["jugadorCirculo"] ){
+            if($coleccion[$i]["puntosCruz"] == $coleccion[$i]["puntosCirculo"] ){
              $PartidasEmpate++;
              $puntosAcum = $puntosAcum + $PartidasEmpate;
-        }elseif($coleccionJuegos[$i]["puntosCruz"] < $coleccionJuegos[$i]["puntosCirculo"] ){
+             }elseif($coleccion[$i]["puntosCruz"] < $coleccion[$i]["puntosCirculo"] ){
              $partidasGanadas ++;
-             $puntosAcum = $puntosAcum + $coleccionJuegos[$i]["puntosCirculo"];
-        }else{
+             $puntosAcum = $puntosAcum + $coleccion[$i]["puntosCirculo"];
+             }else{
             $partidasPerdidas++; 
-        }
+             }
 
-    }
+         }
         
     }
 
@@ -318,12 +317,11 @@ for($i=0; $i < count($coleccionJuegos); $i++){
         "juegosEmpatados" => $PartidasEmpate,
         "puntosAcumulados" =>  $puntosAcum ];
      
-     
     return $resumenJugador;
 }
 
 /**
- * MODULO 5 DESDE EL PUNTO DE VISTA DEL USUARIO
+ * 5 Desde el punto de vista del usuario
  * Este modulo muestra por pantalla el resumen del jugador
  * @param $arrayResumen
  */
@@ -345,12 +343,13 @@ function mostrarResumen($arrayResumen){
 
 /**
  * 11)
- * compara la los nombres de la clave "jugadorCirculo"
+ * Esta funcion compara la los nombres de la clave "jugadorCirculo" de las dos primeras colecciones y retorna un valor segun la relacion esntre estas
  * @param array $a
  * @param array $b
  * @return int
  */
 function cmp($a, $b){
+    //int $orden
     if($a["jugadorCirculo"]== $b["jugadorCirculo"]){
         $orden = 0; 
     } elseif($a["jugadorCirculo"]<$b["jugadorCirculo"]){
@@ -362,11 +361,11 @@ function cmp($a, $b){
 } 
 
 /**
- * Se ordena por nombre usando la funcion uasort
+ * Esta funcion ordena por nombre usando la funcion uasort
  * @param array $coleccion
  */
 function ordenarPorNombre($coleccion){
-//La funcion uasort ordena loleccion de juegos con la función "cmp"
+//La funcion uasort ordena la coleccion de juegos con la función "cmp"
 uasort($coleccion, 'cmp'); 
 print_r($coleccion);
 }
@@ -374,10 +373,11 @@ print_r($coleccion);
 //FUNCIONES PARA EL MENU//
 
 /** 
-* menu de opciones que repite mientras la opcion no sea salir, y retorna  *la opcion 
-* @return int $opcion
+* Esta funcion permite seleccionar una opcion del menu
+* @return int
 */
 function seleccionarOpcion(){
+    //int $opcion
     $opcion = 0;
     echo"Elija una opcion valida: \n";
     while($opcion != 7){
@@ -399,17 +399,15 @@ function seleccionarOpcion(){
 }
 
 
-
-
-
 /**************************************/
-/*********** PROGRAMA PRINCIPAL *******/
+/**********PROGRAMA PRINCIPAL *******/
 /**************************************/
 
 //Declaración de variables:
+
 //int $opcion, $numero, $indice
-//array $juego
-//String $nombre
+//array $coleccionJuegos, $juego 
+//string $nombre
 
 
 //Proceso:
@@ -418,7 +416,7 @@ function seleccionarOpcion(){
 $coleccionJuegos = cargarJuegos();
 
 //$juego = jugar();
-print_r($coleccionJuegos);
+//print_r($coleccionJuegos);
 //imprimirResultado($juego);
 
 do {
