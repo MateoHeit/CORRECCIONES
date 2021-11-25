@@ -83,8 +83,8 @@ function mostrarJuego($coleccion, $numeroJuego){
     // imprimo el resultado del juego
     echo "****************************\n";
     echo "Juego TATETI: " . ($numeroJuego+1) . " " . $resultado . "\n";
-    echo "Jugador X: " . $nombreX . " obtuvo " . $puntosX . "puntos \n";
-    echo "Jugador O: " . $nombreO . " obtuvo " . $puntosO . "puntos \n";
+    echo "Jugador X: " . $nombreX . " obtuvo " . $puntosX . " puntos \n";
+    echo "Jugador O: " . $nombreO . " obtuvo " . $puntosO . " puntos \n";
     echo "****************************\n";
 }
 
@@ -155,7 +155,7 @@ function indiceGanador($coleccion, $nombreJugador){
           }
        }
    
-       if($i >= count($coleccion)-1 ){
+       if($i >= count($coleccion)){
           $flag = false;
           $indice = -1; //en caso de que no haya ganado ninguna
        }
@@ -239,20 +239,20 @@ return $ganados;
 /**
  * 4)Punto de vista del usuario
  * Este modulo calcula el porcentaje de juegos ganados segun sea el simbolo
- * @param array $coleccion
+ * @param array $coleccion1
  */
-function mostrarPorcentajeGanados($coleccion){
+function mostrarPorcentajeGanados($coleccion1){
     //float $porcentaje
     //String $simbolo 
 
     $simbolo = retornaSimbolo();
 
     if($simbolo == "X"){
-        $porcentaje = juegosGanadosPorSimbolo($coleccion, $simbolo) * 100 / juegosGanadosTot($coleccion);
+        $porcentaje = juegosGanadosPorSimbolo($coleccion1, $simbolo) * 100 / juegosGanadosTot($coleccion1);
        echo  "El porcentaje de los juegos ganados por ". $simbolo. " es: ". $porcentaje . "% \n";
 
     }else{
-        $porcentaje = juegosGanadosPorSimbolo($coleccion, $simbolo) * 100 / juegosGanadosTot($coleccion);
+        $porcentaje = juegosGanadosPorSimbolo($coleccion1, $simbolo) * 100 / juegosGanadosTot($coleccion1);
         echo "El porcentaje de los juegos ganados por". $simbolo. " es: ". $porcentaje . "% \n";
     } 
 }
