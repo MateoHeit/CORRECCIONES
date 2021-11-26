@@ -371,7 +371,9 @@ print_r($coleccion);
 function seleccionarOpcion(){
     //int $opcion
     $opcion = 0;
+    echo" \n";
     echo"Elija una opcion valida: \n";
+    echo" \n";
     while($opcion != 7){
  	    echo"Menú de opciones \n";
         echo"1) Jugar al tateti \n";
@@ -419,7 +421,15 @@ do {
             //Jugar al tateti
      		$juego = jugar();
             $coleccionJuegos = agregarJuego($coleccionJuegos, $juego);
-            echo " \n ";
+
+            if($juego["puntosCruz"] > $juego["puntosCirculo"]){
+                echo "Ah GANADO el Juegador ". $juego["jugadorCruz"]." ".$juego["puntosCruz"]." a ".$juego["puntosCirculo"];
+        }elseif($juego["puntosCruz"] < $juego["puntosCirculo"]){
+                    echo "Ah GANADO el Juegador ". $juego["jugadorCirculo"]." ".$juego["puntosCirculo"]." a ".$juego["puntosCruz"];
+        }else{
+             echo "EMPATE";
+        }
+            echo "  \n ";
             break;
         case 2:
             //Mostrar un juego
