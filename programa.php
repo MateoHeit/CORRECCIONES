@@ -99,15 +99,15 @@ function pideYverificaJugador($coleccion){
     //int $i
     //String $nombre
     //boolean $repetir
-    $i = 0;
-    $repetir = false;
+    $i = 0;    
 
     echo"Ingrese el nombre de un Jugador: ";
     //convierto el nobmre a mayusculas
     $nombre= strtoupper(trim(fgets(STDIN)));
     
     do{
-    while(($coleccion[$i]["jugadorCruz"]!= $nombre && $coleccion[$i]["jugadorCirculo"] !=$nombre ) && $i < count($coleccion) ){
+    $repetir = false;
+    while(($coleccion[$i]["jugadorCruz"]!= $nombre && $coleccion[$i]["jugadorCirculo"] !=$nombre ) && $i < count($coleccion)-1){
         $i++;
     }
     if($coleccion[$i]["jugadorCruz"]== $nombre){
@@ -116,7 +116,7 @@ function pideYverificaJugador($coleccion){
         $nombre = $coleccion[$i]["jugadorCirculo"];
     } 
     
-    if($i >= count($coleccion)){
+    if($i >= count($coleccion)-1){
         echo"Este jugador No se encuentra en la colección de juegos, Por favor ingrese otro: "; 
         $nombre= strtoupper(trim(fgets(STDIN)));
         $i=0;
